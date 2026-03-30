@@ -1,4 +1,4 @@
-# 📝 Tasks Management App
+# 📝 Frontend Tasks
 
 ![Node.js](https://img.shields.io/badge/Node.js-20.19.6-green) ![React](https://img.shields.io/badge/React-18.2.0-blue) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
