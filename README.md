@@ -78,21 +78,6 @@ Authorization: Bearer <token>
 * No custom UI components created manually
 * Clean and responsive layout
 
----
-
-## 📁 Project Structure
-
-```
-src/
-├── components/
-├── pages/ or app/
-│   ├── login/
-│   ├── register/
-│   ├── home/
-├── services/
-│   └── api.js
-```
-
 
 ## 📬 Submission
 
