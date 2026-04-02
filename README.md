@@ -80,7 +80,7 @@ Authorization: Bearer <token>
 
 
 ## 📬 Submission
-
+The candidate are required to push the fronend code only inside the repository.
 * GitHub Repository: `<your-repo-link>`
 * Submitted via company email
 
