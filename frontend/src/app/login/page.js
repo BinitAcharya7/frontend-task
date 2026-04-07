@@ -5,13 +5,29 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { getSessionSnapshot, loginUser } from '@/lib/services/auth-service';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function LoginPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState('');
+  const [logoutNotice] = useState(() => {
+    if (typeof window === 'undefined') return '';
+
+    const notice = window.sessionStorage.getItem('logout_notice') || '';
+    if (notice) {
+      window.sessionStorage.removeItem('logout_notice');
+    }
+
+    return notice;
+  });
 
   const {
     register,
@@ -54,6 +70,12 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent>
+          {logoutNotice && (
+            <p className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+              {logoutNotice}
+            </p>
+          )}
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
@@ -97,7 +119,9 @@ export default function LoginPage() {
               )}
             </div>
 
-            {serverError && <p className="text-sm text-red-600">{serverError}</p>}
+            {serverError && (
+              <p className="text-sm text-red-600">{serverError}</p>
+            )}
 
             <Button type="submit" disabled={isSubmitting} className="w-full">
               {isSubmitting ? 'Signing in...' : 'Login'}
@@ -106,7 +130,10 @@ export default function LoginPage() {
 
           <p className="mt-4 text-sm text-slate-600">
             New here?{' '}
-            <a href="/register" className="font-medium text-slate-900 underline">
+            <a
+              href="/register"
+              className="font-medium text-slate-900 underline"
+            >
               Create an account
             </a>
           </p>

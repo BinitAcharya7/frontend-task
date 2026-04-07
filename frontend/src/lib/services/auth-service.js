@@ -4,7 +4,9 @@ import {
   clearAuthTokens,
   getAccessToken,
   getRefreshToken,
+  getUserEmail,
   setAuthTokens,
+  setUserEmail,
 } from '@/lib/auth-storage';
 
 const authHttp = axios.create({
@@ -27,6 +29,7 @@ export async function registerUser(formData) {
 
   if (authData.accessToken && authData.refreshToken) {
     setAuthTokens(authData);
+    setUserEmail(authData.email);
   }
 
   return authData;
@@ -38,6 +41,7 @@ export async function loginUser(formData) {
 
   if (authData.accessToken && authData.refreshToken) {
     setAuthTokens(authData);
+    setUserEmail(authData.email);
   }
 
   return authData;
@@ -66,22 +70,33 @@ export async function refreshAccessToken() {
 
 export async function logoutUser() {
   const refreshToken = getRefreshToken();
+  let remoteLogoutFailed = false;
 
   try {
     if (refreshToken) {
-      await authHttp.post('/api/auth/logout', {
-        token: refreshToken,
-      });
+      try {
+        await authHttp.post('/api/auth/logout', {
+          token: refreshToken,
+        });
+      } catch {
+        // Ignore backend logout failures.
+        remoteLogoutFailed = true;
+      }
     }
   } finally {
     clearAuthTokens();
   }
+
+  return {
+    remoteLogoutFailed,
+  };
 }
 
 export function getSessionSnapshot() {
   return {
     accessToken: getAccessToken(),
     refreshToken: getRefreshToken(),
+    email: getUserEmail(),
     isAuthenticated: Boolean(getAccessToken()),
   };
 }

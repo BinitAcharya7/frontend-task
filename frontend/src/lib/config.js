@@ -7,4 +7,7 @@ export const ACCESS_TOKEN_KEY =
 export const REFRESH_TOKEN_KEY =
   process.env.NEXT_PUBLIC_REFRESH_TOKEN_KEY || 'frontend_task_refresh_token';
 
+export const USER_EMAIL_KEY =
+  process.env.NEXT_PUBLIC_USER_EMAIL_KEY || 'frontend_task_user_email';
+
 export const isBrowser = typeof window !== 'undefined';
