@@ -1,58 +1,62 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 export default function ProfileDetailCard({
+  open,
+  onOpenChange,
   detailsLoading,
   detailsError,
   selectedProfile,
 }) {
-  if (detailsLoading) {
-    return (
-      <Card className="mb-6">
-        <CardContent className="pt-6">
-          <p className="text-muted-foreground">Loading profile details...</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (detailsError) {
-    return (
-      <Card className="mb-6">
-        <CardContent className="pt-6">
-          <p className="text-sm text-red-600">{detailsError}</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (!selectedProfile) return null;
-
   return (
-    <Card className="mb-6">
-      <CardHeader>
-        <CardTitle>Profile Detail</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-1 text-sm">
-        <p>
-          <span className="font-medium">Name:</span> {selectedProfile.name}
-        </p>
-        <p>
-          <span className="font-medium">Email:</span> {selectedProfile.email}
-        </p>
-        <p>
-          <span className="font-medium">Phone:</span>{' '}
-          {selectedProfile.phone || '-'}
-        </p>
-        <p>
-          <span className="font-medium">Address:</span>{' '}
-          {selectedProfile.address || '-'}
-        </p>
-        <p>
-          <span className="font-medium">DOB:</span> {selectedProfile.dob || '-'}
-        </p>
-      </CardContent>
-    </Card>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Profile Detail</DialogTitle>
+          <DialogDescription>Read-only profile information.</DialogDescription>
+        </DialogHeader>
+
+        {detailsLoading && (
+          <p className="text-sm text-muted-foreground">
+            Loading profile details...
+          </p>
+        )}
+
+        {!detailsLoading && detailsError && (
+          <p className="text-sm text-red-600">{detailsError}</p>
+        )}
+
+        {!detailsLoading && !detailsError && selectedProfile && (
+          <div className="space-y-1 text-sm">
+            <p>
+              <span className="font-medium">Name:</span> {selectedProfile.name}
+            </p>
+            <p>
+              <span className="font-medium">Email:</span>{' '}
+              {selectedProfile.email}
+            </p>
+            <p>
+              <span className="font-medium">Phone:</span>{' '}
+              {selectedProfile.phone || '-'}
+            </p>
+            <p>
+              <span className="font-medium">Address:</span>{' '}
+              {selectedProfile.address || '-'}
+            </p>
+            <p>
+              <span className="font-medium">DOB:</span>{' '}
+              {selectedProfile.dob || '-'}
+            </p>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }

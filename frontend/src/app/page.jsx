@@ -40,6 +40,7 @@ export default function HomePage() {
   const [actionSuccess, setActionSuccess] = useState('');
 
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [detailsError, setDetailsError] = useState('');
 
@@ -143,6 +144,7 @@ export default function HomePage() {
     resetActionMessages();
     setDetailsError('');
     setDetailsLoading(true);
+    setIsDetailOpen(true);
 
     if (typeof id === 'number') {
       const localProfile =
@@ -159,6 +161,15 @@ export default function HomePage() {
       setSelectedProfile(null);
       setDetailsError(mapErrorMessage(requestError, 'Failed to load details'));
     } finally {
+      setDetailsLoading(false);
+    }
+  }
+
+  function handleDetailDialogOpenChange(nextOpen) {
+    setIsDetailOpen(nextOpen);
+    if (!nextOpen) {
+      setSelectedProfile(null);
+      setDetailsError('');
       setDetailsLoading(false);
     }
   }
@@ -296,7 +307,7 @@ export default function HomePage() {
         </Card>
 
         <EditProfileForm
-          editProfileId={editProfileId}
+          open={Boolean(editProfileId)}
           editForm={editForm}
           setEditForm={setEditForm}
           onSubmit={handleSaveEdit}
@@ -305,6 +316,8 @@ export default function HomePage() {
         />
 
         <ProfileDetailCard
+          open={isDetailOpen}
+          onOpenChange={handleDetailDialogOpenChange}
           detailsLoading={detailsLoading}
           detailsError={detailsError}
           selectedProfile={selectedProfile}

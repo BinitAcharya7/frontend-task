@@ -1,25 +1,40 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 export default function EditProfileForm({
-  editProfileId,
+  open,
   editForm,
   setEditForm,
   onSubmit,
   onCancel,
   actionLoading,
 }) {
-  if (!editProfileId) return null;
-
   return (
-    <Card className="mb-6">
-      <CardHeader>
-        <CardTitle>Edit Profile</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) {
+          onCancel();
+        }
+      }}
+    >
+      <DialogContent className="sm:max-w-3xl">
+        <DialogHeader>
+          <DialogTitle>Edit Profile</DialogTitle>
+          <DialogDescription>
+            Update the selected profile details.
+          </DialogDescription>
+        </DialogHeader>
+
         <form
           onSubmit={onSubmit}
           className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
@@ -74,7 +89,7 @@ export default function EditProfileForm({
             </Button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 }
