@@ -64,7 +64,7 @@ export default function CreateProfileDialog({ onCreate, disabled = false }) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="sm:max-w-xl border-gray-400 p-4 border rounded-2xl flex-col text-left shadow-black bg-linear-120 from-gray-900 via-slate-700 to-slate-950 text-white">
         <DialogHeader>
           <DialogTitle>Create Profile</DialogTitle>
           <DialogDescription>
