@@ -385,12 +385,6 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                {loading && (
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    Loading next page...
-                  </p>
-                )}
-
                 <ProfilesPagination
                   page={page}
                   totalPages={totalPages}

@@ -54,8 +54,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md items-center justify-center p-6">
-      <Card className="w-full">
+    <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6">
+      <div className="text-center">
+        <h1 className="bg-linear-to-r from-orange-400 via-amber-300 to-orange-600 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
+          Welcome aboard
+        </h1>
+        <p className="mt-2 text-sm text-slate-300">Let’s get you set up.</p>
+      </div>
+      <Card className="w-full sm:max-w-xl border-b rounded-2xl bg-linear-120 from-gray-900 via-slate-700 to-gray-900 text-white">
         <CardHeader>
           <CardTitle>Create account</CardTitle>
           <CardDescription>
@@ -138,9 +144,9 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <p className="mt-4 text-sm text-slate-600">
+          <p className="mt-4 text-sm text-slate-400">
             Already have an account?{' '}
-            <a href="/login" className="font-medium text-slate-900 underline">
+            <a href="/login" className="font-medium text-blue-700 underline">
               Login
             </a>
           </p>
