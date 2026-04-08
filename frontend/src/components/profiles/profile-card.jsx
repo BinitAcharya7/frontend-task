@@ -36,9 +36,7 @@ export default function ProfileCard({
         </p>
 
         {isSeedProfile && (
-          <p className="text-xs text-amber-700">
-            Seed profile: view works locally, edit/delete are read-only.
-          </p>
+          <p className="text-xs text-amber-700">Seed profile</p>
         )}
 
         <div className="mt-3 flex gap-2">

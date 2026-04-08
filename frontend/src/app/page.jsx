@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import ProtectedShell from '@/components/protected-shell';
 import Nav from '@/components/nav';
@@ -24,6 +24,7 @@ export default function HomePage() {
   const [limit] = useState(12);
   const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('name-asc');
   const [refreshTick, setRefreshTick] = useState(0);
 
   const [hasPrev, setHasPrev] = useState(false);
@@ -247,6 +248,28 @@ export default function HomePage() {
     }
   }
 
+  const sortedProfiles = useMemo(() => {
+    const items = [...profiles];
+
+    items.sort((a, b) => {
+      if (sortBy === 'name-desc') {
+        return String(b?.name || '').localeCompare(String(a?.name || ''));
+      }
+
+      if (sortBy === 'dob-asc') {
+        return new Date(a?.dob || 0) - new Date(b?.dob || 0);
+      }
+
+      if (sortBy === 'dob-desc') {
+        return new Date(b?.dob || 0) - new Date(a?.dob || 0);
+      }
+
+      return String(a?.name || '').localeCompare(String(b?.name || ''));
+    });
+
+    return items;
+  }, [profiles, sortBy]);
+
   return (
     <ProtectedShell>
       <Nav />
@@ -263,7 +286,9 @@ export default function HomePage() {
           <CardContent>
             <ProfilesSearchBar
               searchInput={searchInput}
+              sortBy={sortBy}
               onSearchInputChange={setSearchInput}
+              onSortChange={setSortBy}
               onSearchSubmit={handleSearchSubmit}
               onClear={handleClearSearch}
             />
@@ -318,7 +343,7 @@ export default function HomePage() {
             {!loading && !error && profiles.length > 0 && (
               <>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {profiles.map((profile) => (
+                  {sortedProfiles.map((profile) => (
                     <ProfileCard
                       key={profile.id}
                       profile={profile}

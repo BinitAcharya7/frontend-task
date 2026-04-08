@@ -23,8 +23,18 @@ function normalizeAuthPayload(payload) {
   };
 }
 
+function normalizeAuthCredentials(formData = {}) {
+  return {
+    email: String(formData?.email || '')
+      .trim()
+      .toLowerCase(),
+    password: String(formData?.password || '').trim(),
+  };
+}
+
 export async function registerUser(formData) {
-  const response = await authHttp.post('/api/auth/register', formData);
+  const payload = normalizeAuthCredentials(formData);
+  const response = await authHttp.post('/api/auth/register', payload);
   const authData = normalizeAuthPayload(response.data);
 
   if (authData.accessToken && authData.refreshToken) {
@@ -36,7 +46,8 @@ export async function registerUser(formData) {
 }
 
 export async function loginUser(formData) {
-  const response = await authHttp.post('/api/auth/login', formData);
+  const payload = normalizeAuthCredentials(formData);
+  const response = await authHttp.post('/api/auth/login', payload);
   const authData = normalizeAuthPayload(response.data);
 
   if (authData.accessToken && authData.refreshToken) {
@@ -70,7 +81,6 @@ export async function refreshAccessToken() {
 
 export async function logoutUser() {
   const refreshToken = getRefreshToken();
-  let remoteLogoutFailed = false;
 
   try {
     if (refreshToken) {
@@ -80,16 +90,11 @@ export async function logoutUser() {
         });
       } catch {
         // Ignore backend logout failures.
-        remoteLogoutFailed = true;
       }
     }
   } finally {
     clearAuthTokens();
   }
-
-  return {
-    remoteLogoutFailed,
-  };
 }
 
 export function getSessionSnapshot() {

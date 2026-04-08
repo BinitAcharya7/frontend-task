@@ -18,16 +18,6 @@ import { Label } from '@/components/ui/label';
 export default function LoginPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState('');
-  const [logoutNotice] = useState(() => {
-    if (typeof window === 'undefined') return '';
-
-    const notice = window.sessionStorage.getItem('logout_notice') || '';
-    if (notice) {
-      window.sessionStorage.removeItem('logout_notice');
-    }
-
-    return notice;
-  });
 
   const {
     register,
@@ -53,10 +43,16 @@ export default function LoginPage() {
       await loginUser(values);
       router.replace('/');
     } catch (error) {
-      const message =
+      const rawMessage =
         error?.response?.data?.msg ||
         error?.response?.data?.message ||
         'Login failed';
+
+      const message =
+        rawMessage.toLowerCase() === 'invalid credentials'
+          ? 'Invalid credentials.'
+          : rawMessage;
+
       setServerError(message);
     }
   }
@@ -70,13 +66,11 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent>
-          {logoutNotice && (
-            <p className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-              {logoutNotice}
-            </p>
-          )}
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
               <Input
