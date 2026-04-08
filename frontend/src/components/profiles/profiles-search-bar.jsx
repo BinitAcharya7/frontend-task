@@ -14,14 +14,14 @@ export default function ProfilesSearchBar({
     <div className="flex flex-col gap-3 sm:flex-row">
       <Input
         type="text"
-        placeholder="Search by name, email, phone"
+        placeholder="Search people by name, email or phone."
         value={searchInput}
         onChange={(event) => onSearchInputChange(event.target.value)}
       />
       <select
         value={sortBy}
         onChange={(event) => onSortChange(event.target.value)}
-        className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+        className="h-10 rounded-md border border-input bg-background px-3 text-sm text-blue-700"
       >
         <option value="name-asc">Name (A -{'>'} Z)</option>
         <option value="name-desc">Name (Z -{'>'} A)</option>
@@ -29,7 +29,12 @@ export default function ProfilesSearchBar({
         <option value="dob-desc">DOB (Youngest first)</option>
       </select>
       <div className="flex">
-        <Button type="button" variant="outline" onClick={onClear}>
+        <Button
+          className="text-purple-500"
+          type="button"
+          variant="outline"
+          onClick={onClear}
+        >
           Clear Search
         </Button>
       </div>

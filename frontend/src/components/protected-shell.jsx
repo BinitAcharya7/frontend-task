@@ -1,19 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSessionSnapshot } from '@/lib/services/auth-service';
 
 export default function ProtectedShell({ children }) {
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
-  const isMountedRef = useRef(true);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
 
   useEffect(() => {
     const snapshot = getSessionSnapshot();
@@ -21,10 +14,7 @@ export default function ProtectedShell({ children }) {
       router.replace('/login');
       return;
     }
-    if (isMountedRef.current) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsChecked(true);
-    }
+    setIsChecked(true);
   }, [router]);
 
   if (!isChecked) {

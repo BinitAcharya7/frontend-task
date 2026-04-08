@@ -38,6 +38,7 @@ export default function HomePage() {
   const [actionLoading, setActionLoading] = useState(false);
   const [actionError, setActionError] = useState('');
   const [actionSuccess, setActionSuccess] = useState('');
+  const [seedToastMessage, setSeedToastMessage] = useState('');
 
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -111,6 +112,13 @@ export default function HomePage() {
     setActionSuccess('');
   }
 
+  function showSeedToast(message) {
+    setSeedToastMessage(message);
+    window.setTimeout(() => {
+      setSeedToastMessage('');
+    }, 3000);
+  }
+
   function handleSearchInputChange(value) {
     setSearchInput(value);
     setSearchQuery(value.trim());
@@ -176,9 +184,8 @@ export default function HomePage() {
 
   function handleStartEdit(profile) {
     if (typeof profile?.id === 'number') {
-      resetActionMessages();
-      setActionError(
-        'This seeded profile is read-only. Please Create a new profile to edit.',
+      showSeedToast(
+        'This seeded profile is read-only. Create a new profile to edit.',
       );
       return;
     }
@@ -229,9 +236,8 @@ export default function HomePage() {
 
   async function handleDeleteProfile(id) {
     if (typeof id === 'number') {
-      resetActionMessages();
-      setActionError(
-        'This seeded profile is read-only. Please create a new profile to delete.',
+      showSeedToast(
+        'This seeded profile is read-only. Create a new profile to delete.',
       );
       return;
     }
@@ -288,7 +294,13 @@ export default function HomePage() {
       <Nav />
 
       <main className="mx-auto min-h-screen w-full max-w-6xl p-6">
-        <Card className="mb-6">
+        {seedToastMessage && (
+          <div className="fixed top-24 left-1/2 z-50 w-[min(92vw,32rem)] -translate-x-1/2 rounded-lg border border-rose-300 bg-linear-to-r from-rose-800/90 via-amber-600/90 to-rose-700/90 px-4 py-3 text-sm text-white shadow-lg backdrop-blur-sm">
+            <p className="font-medium">❌ {seedToastMessage}</p>
+          </div>
+        )}
+
+        <Card className="mb-6 border-gray-400 p-4 border rounded-2xl flex-col text-left shadow-black bg-linear-120 from-gray-900 via-slate-700 to-slate-900 text-white">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Profiles</CardTitle>
             <CreateProfileDialog
@@ -337,24 +349,28 @@ export default function HomePage() {
           </Card>
         )}
 
-        <Card>
+        <Card className="border-gray-400 p-4 border rounded-4xl flex-col text-left shadow-black bg-linear-120 from-gray-900 via-slate-700 to-slate-950 text-white">
           <CardHeader>
-            <CardTitle>Profile Listing</CardTitle>
+            <CardTitle>Profiles</CardTitle>
           </CardHeader>
           <CardContent>
-            {loading && (
+            {loading && profiles.length === 0 && (
               <p className="text-muted-foreground">Loading profiles...</p>
             )}
 
-            {!loading && error && (
+            {error && profiles.length === 0 && (
               <p className="text-sm text-red-600">{error}</p>
+            )}
+
+            {error && profiles.length > 0 && (
+              <p className="mb-4 text-sm text-red-600">{error}</p>
             )}
 
             {!loading && !error && profiles.length === 0 && (
               <p className="text-muted-foreground">No profiles found.</p>
             )}
 
-            {!loading && !error && profiles.length > 0 && (
+            {profiles.length > 0 && (
               <>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {sortedProfiles.map((profile) => (
@@ -368,6 +384,12 @@ export default function HomePage() {
                     />
                   ))}
                 </div>
+
+                {loading && (
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    Loading next page...
+                  </p>
+                )}
 
                 <ProfilesPagination
                   page={page}

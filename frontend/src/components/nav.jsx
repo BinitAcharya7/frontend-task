@@ -21,7 +21,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className="w-full border-b border-purple-800 bg-purple-700 text-white">
+    <nav className="w-full border-b border-purple-900 bg-linear-120 from-gray-900 via-slate-700 to-slate-900 text-white">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <div>
           <p className="text-xs uppercase tracking-wide text-purple-100">
@@ -35,8 +35,8 @@ export default function Nav() {
           type="button"
           onClick={handleLogout}
           disabled={loggingOut}
-          variant="secondary"
-          className="bg-white text-purple-700 hover:bg-purple-100"
+          variant="destructive"
+          className="bg-white text-red-700 hover:bg-purple-100"
         >
           {loggingOut ? 'Logging out...' : 'Logout'}
         </Button>

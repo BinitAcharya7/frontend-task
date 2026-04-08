@@ -17,9 +17,9 @@ export default function ProfileDetailCard({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="sm:max-w-xl border-b bg-linear-120 from-blue-950 via-purple-950 to-blue-950">
         <DialogHeader>
-          <DialogTitle>Profile Detail</DialogTitle>
+          <DialogTitle>Profile Details</DialogTitle>
           <DialogDescription>Read-only profile information.</DialogDescription>
         </DialogHeader>
 
@@ -36,22 +36,23 @@ export default function ProfileDetailCard({
         {!detailsLoading && !detailsError && selectedProfile && (
           <div className="space-y-1 text-sm">
             <p>
-              <span className="font-medium">Name:</span> {selectedProfile.name}
+              <span className="font-medium text-green-500">Name:</span>{' '}
+              {selectedProfile.name}
             </p>
             <p>
-              <span className="font-medium">Email:</span>{' '}
+              <span className="font-medium text-green-500">Email:</span>{' '}
               {selectedProfile.email}
             </p>
             <p>
-              <span className="font-medium">Phone:</span>{' '}
+              <span className="font-medium text-green-500">Phone:</span>{' '}
               {selectedProfile.phone || '-'}
             </p>
             <p>
-              <span className="font-medium">Address:</span>{' '}
+              <span className="font-medium text-green-500">Address:</span>{' '}
               {selectedProfile.address || '-'}
             </p>
             <p>
-              <span className="font-medium">DOB:</span>{' '}
+              <span className="font-medium text-green-500">DOB:</span>{' '}
               {selectedProfile.dob || '-'}
             </p>
           </div>
