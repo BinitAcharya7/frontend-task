@@ -8,11 +8,10 @@ export default function ProfilesSearchBar({
   sortBy,
   onSearchInputChange,
   onSortChange,
-  onSearchSubmit,
   onClear,
 }) {
   return (
-    <form onSubmit={onSearchSubmit} className="flex flex-col gap-3 sm:flex-row">
+    <div className="flex flex-col gap-3 sm:flex-row">
       <Input
         type="text"
         placeholder="Search by name, email, phone"
@@ -29,12 +28,11 @@ export default function ProfilesSearchBar({
         <option value="dob-asc">DOB (Oldest first)</option>
         <option value="dob-desc">DOB (Youngest first)</option>
       </select>
-      <div className="flex gap-2">
-        <Button type="submit">Search</Button>
+      <div className="flex">
         <Button type="button" variant="outline" onClick={onClear}>
-          Clear
+          Clear Search
         </Button>
       </div>
-    </form>
+    </div>
   );
 }

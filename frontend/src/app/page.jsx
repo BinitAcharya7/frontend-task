@@ -111,10 +111,10 @@ export default function HomePage() {
     setActionSuccess('');
   }
 
-  function handleSearchSubmit(event) {
-    event.preventDefault();
+  function handleSearchInputChange(value) {
+    setSearchInput(value);
+    setSearchQuery(value.trim());
     setPage(1);
-    setSearchQuery(searchInput.trim());
   }
 
   function handleClearSearch() {
@@ -178,7 +178,7 @@ export default function HomePage() {
     if (typeof profile?.id === 'number') {
       resetActionMessages();
       setActionError(
-        'This seeded profile is read-only because of backend ID mismatch. Create a new profile to test edit/delete endpoints.',
+        'This seeded profile is read-only. Please Create a new profile to edit.',
       );
       return;
     }
@@ -230,7 +230,9 @@ export default function HomePage() {
   async function handleDeleteProfile(id) {
     if (typeof id === 'number') {
       resetActionMessages();
-      setActionError('Create a new profile to delete.');
+      setActionError(
+        'This seeded profile is read-only. Please create a new profile to delete.',
+      );
       return;
     }
 
@@ -298,9 +300,8 @@ export default function HomePage() {
             <ProfilesSearchBar
               searchInput={searchInput}
               sortBy={sortBy}
-              onSearchInputChange={setSearchInput}
+              onSearchInputChange={handleSearchInputChange}
               onSortChange={setSortBy}
-              onSearchSubmit={handleSearchSubmit}
               onClear={handleClearSearch}
             />
           </CardContent>
