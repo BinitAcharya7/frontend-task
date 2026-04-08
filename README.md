@@ -4,6 +4,13 @@ This repository includes a backend API and a Next.js frontend for authentication
 
 > ⚠️ For the assignment review, only frontend changes are expected.
 
+## 🛠️ Clone the repository
+
+```bash
+git clone https://github.com/BinitAcharya7/frontend-task.git
+cd frontend-task
+```
+
 ## ⚙️ Installation & Setup
 
 Install dependencies and start the API server:
