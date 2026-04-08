@@ -10,6 +10,8 @@ export default function ProfileCard({
   onDelete,
   disabled,
 }) {
+  const isSeedProfile = typeof profile?.id === 'number';
+
   return (
     <Card>
       <CardHeader>
@@ -32,6 +34,12 @@ export default function ProfileCard({
           <span className="font-medium text-foreground">DOB:</span>{' '}
           {profile.dob || '-'}
         </p>
+
+        {isSeedProfile && (
+          <p className="text-xs text-amber-700">
+            Seed profile: view works locally, edit/delete are read-only.
+          </p>
+        )}
 
         <div className="mt-3 flex gap-2">
           <Button
