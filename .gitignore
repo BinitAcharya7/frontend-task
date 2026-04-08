@@ -18,6 +18,3 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Assignment planning docs
-frontend/README.md
-frontend/docs/API_CONTRACT.md

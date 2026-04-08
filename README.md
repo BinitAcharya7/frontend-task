@@ -97,6 +97,22 @@ npm run build
 
 ---
 
+## 🖼️ Screenshots
+
+- **Login**: User sign-in form with validation.
+
+![Login](frontend/screenshots/login.png)
+
+- **Register**: New account creation form.
+
+![Register](frontend/screenshots/register.png)
+
+- **Home**: Protected dashboard with profile list and actions.
+
+![Home](frontend/screenshots/home.png)
+
+---
+
 ## 🙌 Acknowledgement
 
 This project was completed as part of a frontend technical assignment.
