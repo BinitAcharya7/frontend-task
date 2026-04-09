@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { API_BASE_URL } from '@/lib/config';
 import { clearAuthTokens, getAccessToken } from '@/lib/auth-storage';
 import { refreshAccessToken } from '@/lib/services/auth-service';
+
+const API_BASE_URL = 'http://localhost:5000';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: 15000,
 });
 
+// Access token attacher
 apiClient.interceptors.request.use(
   (config) => {
     const accessToken = getAccessToken();

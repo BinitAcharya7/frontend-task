@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { API_BASE_URL } from '@/lib/config';
 import {
   clearAuthTokens,
   getAccessToken,
@@ -8,6 +7,8 @@ import {
   setAuthTokens,
   setUserEmail,
 } from '@/lib/auth-storage';
+
+const API_BASE_URL = 'http://localhost:5000';
 
 const authHttp = axios.create({
   baseURL: API_BASE_URL,
@@ -24,11 +25,17 @@ function normalizeAuthPayload(payload) {
 }
 
 function normalizeAuthCredentials(formData = {}) {
+  const password = String(formData?.password || '');
+
+  if (/\s/.test(password)) {
+    throw new Error('Password cannot contain spaces');
+  }
+
   return {
     email: String(formData?.email || '')
       .trim()
       .toLowerCase(),
-    password: String(formData?.password || '').trim(),
+    password: password.trim(),
   };
 }
 

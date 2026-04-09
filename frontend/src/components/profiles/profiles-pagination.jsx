@@ -8,6 +8,7 @@ export default function ProfilesPagination({
   total,
   hasPrev,
   hasNext,
+  loading,
   onPrev,
   onNext,
 }) {
@@ -22,7 +23,7 @@ export default function ProfilesPagination({
         <Button
           type="button"
           variant="outline"
-          disabled={!hasPrev}
+          disabled={!hasPrev || loading}
           onClick={onPrev}
         >
           Previous
@@ -30,7 +31,7 @@ export default function ProfilesPagination({
         <Button
           type="button"
           variant="outline"
-          disabled={!hasNext}
+          disabled={!hasNext || loading}
           onClick={onNext}
         >
           Next

@@ -1,48 +1,56 @@
-import {
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
-  USER_EMAIL_KEY,
-  isBrowser,
-} from '@/lib/config';
+const ACCESS_TOKEN_KEY = 'frontend_task_access_token';
+const REFRESH_TOKEN_KEY = 'frontend_task_refresh_token';
+const USER_EMAIL_KEY = 'frontend_task_user_email';
+
+function getStorage() {
+  if (typeof window === 'undefined') return null;
+  return window.localStorage;
+}
 
 export function getAccessToken() {
-  if (!isBrowser) return null;
-  return window.localStorage.getItem(ACCESS_TOKEN_KEY);
+  const storage = getStorage();
+  if (!storage) return null;
+  return storage.getItem(ACCESS_TOKEN_KEY);
 }
 
 export function getRefreshToken() {
-  if (!isBrowser) return null;
-  return window.localStorage.getItem(REFRESH_TOKEN_KEY);
+  const storage = getStorage();
+  if (!storage) return null;
+  return storage.getItem(REFRESH_TOKEN_KEY);
 }
 
 export function getUserEmail() {
-  if (!isBrowser) return null;
-  return window.localStorage.getItem(USER_EMAIL_KEY);
+  const storage = getStorage();
+  if (!storage) return null;
+  return storage.getItem(USER_EMAIL_KEY);
 }
 
 export function setAuthTokens({ accessToken, refreshToken }) {
-  if (!isBrowser) return;
+  const storage = getStorage();
+  if (!storage) return;
 
   if (accessToken) {
-    window.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    storage.setItem(ACCESS_TOKEN_KEY, accessToken);
   }
 
   if (refreshToken) {
-    window.localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    storage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   }
 }
 
 export function clearAuthTokens() {
-  if (!isBrowser) return;
-  window.localStorage.removeItem(ACCESS_TOKEN_KEY);
-  window.localStorage.removeItem(REFRESH_TOKEN_KEY);
-  window.localStorage.removeItem(USER_EMAIL_KEY);
+  const storage = getStorage();
+  if (!storage) return;
+  storage.removeItem(ACCESS_TOKEN_KEY);
+  storage.removeItem(REFRESH_TOKEN_KEY);
+  storage.removeItem(USER_EMAIL_KEY);
 }
 
 export function setUserEmail(email) {
-  if (!isBrowser) return;
+  const storage = getStorage();
+  if (!storage) return;
   if (!email) return;
-  window.localStorage.setItem(USER_EMAIL_KEY, email);
+  storage.setItem(USER_EMAIL_KEY, email);
 }
 
 export function getAuthTokens() {

@@ -46,6 +46,7 @@ export default function LoginPage() {
       const rawMessage =
         error?.response?.data?.msg ||
         error?.response?.data?.message ||
+        error?.message ||
         'Login failed';
 
       const message =
