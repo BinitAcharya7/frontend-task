@@ -17,7 +17,7 @@ export default function ProfileDetailCard({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-xl border-b bg-linear-120 from-blue-950 via-purple-950 to-blue-950">
+      <DialogContent className="sm:max-w-xl border-b bg-linear-120 from-blue-950 via-purple-950 to-blue-950 text-white">
         <DialogHeader>
           <DialogTitle>Profile Details</DialogTitle>
           <DialogDescription>Read-only profile information.</DialogDescription>
