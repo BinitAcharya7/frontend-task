@@ -2,8 +2,6 @@
 
 This repository includes a backend API and a Next.js frontend for authentication and profile management.
 
-> ⚠️ For the assignment review, only frontend changes are expected.
-
 ## 🛠️ Clone the repository
 
 ```bash

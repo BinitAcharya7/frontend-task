@@ -28,7 +28,7 @@ function normalizeAuthCredentials(formData = {}) {
   const password = String(formData?.password || '');
 
   if (/\s/.test(password)) {
-    throw new Error('Password cannot contain spaces');
+    throw new Error('Password cannot contain spaces.');
   }
 
   return {
