@@ -25,6 +25,7 @@ export default function ProfilesPagination({
           variant="outline"
           disabled={!hasPrev || loading}
           onClick={onPrev}
+          className="text-purple-600"
         >
           Previous
         </Button>
@@ -33,6 +34,7 @@ export default function ProfilesPagination({
           variant="outline"
           disabled={!hasNext || loading}
           onClick={onNext}
+          className="text-purple-600"
         >
           Next
         </Button>
